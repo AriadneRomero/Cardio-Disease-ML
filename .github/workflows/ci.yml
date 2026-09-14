@@ -1,0 +1,24 @@
+name: CI
+
+on: [push]
+
+jobs:
+  run-notebook:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Execute notebook
+        run: |
+          jupyter nbconvert --to notebook --execute \
+            --output executed_cardio_analysis.ipynb \
+            notebooks/cardio_analysis.ipynb
